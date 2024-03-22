@@ -7,11 +7,14 @@
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
+  "scripts": {
+    "test": "npx jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Dar1aK/backend-project-46.git"
   },
-  "author": "",
+  "author": "Daria Karataeva",
   "license": "ISC",
   "dependencies": {
     "commander": "^12.0.0",
