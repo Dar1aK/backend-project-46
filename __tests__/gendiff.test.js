@@ -1,8 +1,10 @@
-import { test, expect } from "@jest/globals";
+import { test, expect, jest } from "@jest/globals";
 
 import getGenDiff from "../src/gendiff.js";
 
-test("getGenDiff", () => {
+jest.useFakeTimers();
+
+test("getGenDiff", async () => {
   expect(getGenDiff("./files/file1.json", "./files/file2.json")).toEqual({
     "- follow": false,
     host: "hexlet.io",

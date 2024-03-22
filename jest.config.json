@@ -1,0 +1,7 @@
+{
+  "transformIgnorePatterns": ["/node_modules/", "/__tests__/"],
+  "automock": false,
+  "testEnvironment": "node",
+  "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
+  "modulePaths": ["<rootDir>/src/"]
+}
