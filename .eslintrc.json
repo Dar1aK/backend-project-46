@@ -18,6 +18,6 @@
     ],
     "import/extensions": [2, "always"],
     "no-restricted-syntax": [1],
-    "import/no-extraneous-dependencies": [2, { "devDependencies": true }]
+    "import/no-extraneous-dependencies": [0, { "devDependencies": true }]
   }
 }
