@@ -1,5 +1,8 @@
 {
-  "fakeTimers": "fake",
+  "fakeTimers": {
+    "doNotFake": ["nextTick"],
+    "timerLimit": 5000
+  },
   "verbose": true,
   "automock": false,
   "testEnvironment": "node",
