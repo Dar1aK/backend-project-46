@@ -40,5 +40,6 @@ const getGenDiff = (filepath1, filepath2) => {
     .fromPairs()
     .value();
   console.log(sortedResult);
+  return sortedResult;
 };
 export default getGenDiff;

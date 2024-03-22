@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true
   },
   "extends": "airbnb-base",
   "parserOptions": {
@@ -16,6 +17,7 @@
       { "avoidEscape": true, "allowTemplateLiterals": true }
     ],
     "import/extensions": [2, "always"],
-    "no-restricted-syntax": [1]
+    "no-restricted-syntax": [1],
+    "import/no-extraneous-dependencies": [2, { "devDependencies": true }]
   }
 }
