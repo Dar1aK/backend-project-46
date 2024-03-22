@@ -2,13 +2,21 @@ import _ from "lodash";
 import path from "path";
 import fs from "fs";
 
-export const getGenDiff = (filepath1, filepath2) => {
-  const path1 = !filepath1.startsWith(".")
-    ? `${process.cwd()}${filepath1}`
-    : filepath1;
-  const path2 = !filepath2.startsWith(".")
-    ? `${process.cwd()}${filepath2}`
-    : filepath2;
+const getGenDiff = (filepath1, filepath2) => {
+  let path1;
+  let path2;
+
+  if (!filepath1.startsWith(".")) {
+    path1 = `${process.cwd()}${filepath1}`;
+  } else {
+    path1 = filepath1;
+  }
+
+  if (!filepath2.startsWith(".")) {
+    path2 = `${process.cwd()}${filepath2}`;
+  } else {
+    path2 = filepath2;
+  }
 
   const data1 = JSON.parse(fs.readFileSync(path.resolve(path1), "utf-8"));
   const data2 = JSON.parse(fs.readFileSync(path.resolve(path2), "utf-8"));
@@ -34,10 +42,10 @@ export const getGenDiff = (filepath1, filepath2) => {
   const sortedResult = _(result)
     .toPairs()
     .sortBy([
-      function ([key]) {
-        const keys = key.split(" ");
-        const sortByKey = keys[1] || keys[0];
-        const sortBySign = keys[0] === "-" ? -1 : 1;
+      ([key]) => {
+        const objectKeys = key.split(" ");
+        const sortByKey = objectKeys[1] || objectKeys[0];
+        const sortBySign = objectKeys[0] === "-" ? -1 : 1;
 
         return [sortByKey, sortBySign];
       },
@@ -46,3 +54,4 @@ export const getGenDiff = (filepath1, filepath2) => {
     .value();
   console.log(sortedResult);
 };
+export default getGenDiff;
