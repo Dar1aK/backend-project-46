@@ -1,7 +1,10 @@
 {
-  "transformIgnorePatterns": ["/node_modules/", "/__tests__/"],
+  "fakeTimers": "fake",
+  "verbose": true,
   "automock": false,
   "testEnvironment": "node",
   "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
-  "modulePaths": ["<rootDir>/src/"]
+  "roots": ["<rootDir>", "<rootDir>/src/"],
+  "modulePaths": ["<rootDir>", "<rootDir>/src/"],
+  "moduleDirectories": ["node_modules", "src"]
 }
