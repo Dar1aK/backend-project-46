@@ -10,5 +10,8 @@ lint:
 test: 
 	npx jest
 
+test-coverage:
+	npx jest --coverage --coverageProvider=v8
+
 format:
 	npx prettier --write "**/*.js"
