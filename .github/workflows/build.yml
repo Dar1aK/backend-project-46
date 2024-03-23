@@ -16,13 +16,14 @@ jobs:
       - run: make install
       - run: make test
 
-  codeclimate:
+  coverage:
+    name: coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
       - run: make install
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v5.0.0
+      - uses: paambaati/codeclimate-action@v5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
