@@ -7,5 +7,8 @@ publish:
 lint: 
 	npx eslint
 
+test: 
+	npx jest
+
 format:
 	npx prettier --write "**/*.js"
