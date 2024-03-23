@@ -22,8 +22,6 @@ const parseFiles = (filepath1, filepath2) => {
   const path1 = handlePath(filepath1);
   const path2 = handlePath(filepath2);
 
-  console.log("path1", path1, "path2", path2);
-
   const data1 = parseFile(path1);
   const data2 = parseFile(path2);
 

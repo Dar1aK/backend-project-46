@@ -11,36 +11,38 @@ const result = {
 
 describe("getGenDiff", () => {
   test(".json run with relative paths", async () => {
-    expect(getGenDiff("./files/file1.json", "./files/file2.json")).toEqual(
-      result
-    );
+    expect(
+      getGenDiff("./__fixtures__/file1.json", "./__fixtures__/file2.json")
+    ).toEqual(result);
   });
 
   test(".json run with absolute paths", async () => {
-    expect(getGenDiff("/files/file1.json", "/files/file2.json")).toEqual(
-      result
-    );
+    expect(
+      getGenDiff("/__fixtures__/file1.json", "/__fixtures__/file2.json")
+    ).toEqual(result);
   });
 
   test(".yml run with relative paths", async () => {
-    expect(getGenDiff("./files/file1.yml", "./files/file2.yml")).toEqual(
-      result
-    );
+    expect(
+      getGenDiff("./__fixtures__/file1.yml", "./__fixtures__/file2.yml")
+    ).toEqual(result);
   });
 
   test(".yml run with absolute paths", async () => {
-    expect(getGenDiff("/files/file1.yml", "/files/file2.yml")).toEqual(result);
+    expect(
+      getGenDiff("/__fixtures__/file1.yml", "/__fixtures__/file2.yml")
+    ).toEqual(result);
   });
 
   test(".yaml run with relative paths", async () => {
-    expect(getGenDiff("./files/file1.yaml", "./files/file2.yaml")).toEqual(
-      result
-    );
+    expect(
+      getGenDiff("./__fixtures__/file1.yaml", "./__fixtures__/file2.yaml")
+    ).toEqual(result);
   });
 
   test(".yaml run with absolute paths", async () => {
-    expect(getGenDiff("/files/file1.yaml", "/files/file2.yaml")).toEqual(
-      result
-    );
+    expect(
+      getGenDiff("/__fixtures__/file1.yaml", "/__fixtures__/file2.yaml")
+    ).toEqual(result);
   });
 });
