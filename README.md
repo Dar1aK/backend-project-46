@@ -11,3 +11,5 @@
 ### gendiff
 
 [![asciicast](https://asciinema.org/a/FVew4qwyJMUF9a00rxnGLTxML.svg)](https://asciinema.org/a/FVew4qwyJMUF9a00rxnGLTxML)
+
+[![asciicast](https://asciinema.org/a/AbvfKnml3ECvI9UeewX7v0qih.svg)](https://asciinema.org/a/AbvfKnml3ECvI9UeewX7v0qih)

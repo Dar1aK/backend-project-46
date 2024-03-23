@@ -10,14 +10,36 @@ const result = {
 };
 
 describe("getGenDiff", () => {
-  test("run with relative paths", async () => {
+  test(".json run with relative paths", async () => {
     expect(getGenDiff("./files/file1.json", "./files/file2.json")).toEqual(
       result
     );
   });
 
-  test("run with absolute paths", async () => {
+  test(".json run with absolute paths", async () => {
     expect(getGenDiff("/files/file1.json", "/files/file2.json")).toEqual(
+      result
+    );
+  });
+
+  test(".yml run with relative paths", async () => {
+    expect(getGenDiff("./files/file1.yml", "./files/file2.yml")).toEqual(
+      result
+    );
+  });
+
+  test(".yml run with absolute paths", async () => {
+    expect(getGenDiff("/files/file1.yml", "/files/file2.yml")).toEqual(result);
+  });
+
+  test(".yaml run with relative paths", async () => {
+    expect(getGenDiff("./files/file1.yaml", "./files/file2.yaml")).toEqual(
+      result
+    );
+  });
+
+  test(".yaml run with absolute paths", async () => {
+    expect(getGenDiff("/files/file1.yaml", "/files/file2.yaml")).toEqual(
       result
     );
   });
