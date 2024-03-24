@@ -10,8 +10,6 @@ const getUnionObject = (data1, data2) => {
       : Object.keys(data2);
   const keys = _.union(keys1, keys2);
 
-  // console.log("keys", keys);
-
   for (const key of keys) {
     if (typeof data1[key] === "object" && !Array.isArray(data1[key])) {
       if (data2[key] === undefined) {
@@ -73,7 +71,7 @@ const stylish = (tree) => {
 };
 
 const sortedByKeyAndSign = (resultObject) => {
-  let res = _(resultObject)
+  const sorted = _(resultObject)
     .toPairs()
     .sortBy([
       ([key]) => {
@@ -86,14 +84,14 @@ const sortedByKeyAndSign = (resultObject) => {
     .fromPairs()
     .value();
 
-  const res2 = Object.entries(res).map(([key, children]) => {
+  const withSortedChildren = Object.entries(sorted).map(([key, children]) => {
     if (children && typeof children === "object" && !Array.isArray(children)) {
       return [key, sortedByKeyAndSign(children)];
     }
     return [key, children];
   });
 
-  return Object.fromEntries(res2);
+  return Object.fromEntries(withSortedChildren);
 };
 
 const getGenDiff = (filepath1, filepath2) => {
@@ -102,8 +100,6 @@ const getGenDiff = (filepath1, filepath2) => {
   const resultObject = getUnionObject(data1, data2);
 
   const sortedResult = sortedByKeyAndSign(resultObject);
-
-  // console.log(sortedResult);
 
   return stylish(sortedResult);
 };
