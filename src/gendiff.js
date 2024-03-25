@@ -18,7 +18,7 @@ const getUnionObject = (data1, data2) => {
         result[`- ${key}`] = data1[key];
         result[`+ ${key}`] = data2[key];
       } else {
-        result[`  ${key}`] = getUnionObject(data1[key], data2[key] || {});
+        result[`${key}`] = getUnionObject(data1[key], data2[key] || {});
       }
     } else if (!Object.hasOwn(data1, key)) {
       result[`+ ${key}`] = data2[key];
@@ -28,46 +28,10 @@ const getUnionObject = (data1, data2) => {
       result[`- ${key}`] = data1[key];
       result[`+ ${key}`] = data2[key];
     } else {
-      result[`  ${key}`] = data1[key];
+      result[`${key}`] = data1[key];
     }
   }
   return result;
-};
-
-//2 spaces
-const addSpace = (depth) =>
-  Array(depth)
-    .fill()
-    .reduce((acc) => acc + "  ", "");
-
-const stylish = (tree) => {
-  const iter = ({ child: node, depth, key, isEnd }) => {
-    const space = addSpace(depth);
-
-    if (!node || typeof node !== "object" || Array.isArray(node)) {
-      console.log(`${space}${key} ${node}`);
-      if (isEnd) {
-        console.log(`${addSpace(depth - 1)}}`);
-      }
-      return;
-    }
-
-    console.log(`${space}${key ? `${key}: ` : ""}{ `);
-
-    const children = node && Object.entries(node);
-
-    return children?.map(([key, child], i, arr) => {
-      // console.log("arr", arr, arr[i], arr[i + 1]);
-      return iter({
-        child,
-        depth: depth + 1,
-        key,
-        isEnd: !arr[i + 1],
-      });
-    });
-  };
-
-  return iter({ child: tree, depth: 0 });
 };
 
 const sortedByKeyAndSign = (resultObject) => {
@@ -94,13 +58,13 @@ const sortedByKeyAndSign = (resultObject) => {
   return Object.fromEntries(withSortedChildren);
 };
 
-const getGenDiff = (filepath1, filepath2) => {
+const getGenDiff = (filepath1, filepath2, formatter) => {
   const { data1, data2 } = parseFiles(filepath1, filepath2);
 
   const resultObject = getUnionObject(data1, data2);
 
   const sortedResult = sortedByKeyAndSign(resultObject);
 
-  return stylish(sortedResult);
+  return formatter(sortedResult);
 };
 export default getGenDiff;
