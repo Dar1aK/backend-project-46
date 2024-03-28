@@ -12,4 +12,14 @@
 
 [![asciicast](https://asciinema.org/a/FVew4qwyJMUF9a00rxnGLTxML.svg)](https://asciinema.org/a/FVew4qwyJMUF9a00rxnGLTxML)
 
+### yml parse
+
 [![asciicast](https://asciinema.org/a/AbvfKnml3ECvI9UeewX7v0qih.svg)](https://asciinema.org/a/AbvfKnml3ECvI9UeewX7v0qih)
+
+### Nested objects
+
+[![asciicast](https://asciinema.org/a/RrVeZVm5vFGAcR60uI4bFmfNK.svg)](https://asciinema.org/a/RrVeZVm5vFGAcR60uI4bFmfNK)
+
+### Plain formatter
+
+[![asciicast](https://asciinema.org/a/GU2PS4jjTYLROKCPMHSgkAN83.svg)](https://asciinema.org/a/GU2PS4jjTYLROKCPMHSgkAN83)

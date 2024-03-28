@@ -18,7 +18,7 @@ const getUnionObject = (data1, data2) => {
         result[`- ${key}`] = data1[key];
         result[`+ ${key}`] = data2[key];
       } else {
-        result[`${key}`] = getUnionObject(data1[key], data2[key] || {});
+        result[key] = getUnionObject(data1[key], data2[key] || {});
       }
     } else if (!Object.hasOwn(data1, key)) {
       result[`+ ${key}`] = data2[key];
@@ -28,7 +28,7 @@ const getUnionObject = (data1, data2) => {
       result[`- ${key}`] = data1[key];
       result[`+ ${key}`] = data2[key];
     } else {
-      result[`${key}`] = data1[key];
+      result[key] = data1[key];
     }
   }
   return result;

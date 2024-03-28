@@ -2,7 +2,8 @@
 
 import { Command } from "commander";
 import getGenDiff from "../src/gendiff.js";
-import stylish from "../src/stylish.js";
+import stylish from "../src/formatters/stylish.js";
+import plain from "../src/formatters/plain.js";
 
 const program = new Command();
 
@@ -17,10 +18,11 @@ program
     stylish
   )
   .arguments("<filepath1> <filepath2>")
-  .action((filepath1, filepath2) => {
-    const formatter = program.options.find(
-      ({ short }) => short === "-ft"
-    ).parseArg;
+  .action((filepath1, filepath2, options) => {
+    let formatter = stylish;
+    if (options.formatter === "plain") {
+      formatter = plain;
+    }
     return getGenDiff(filepath1, filepath2, formatter);
   });
 
