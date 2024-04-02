@@ -1,5 +1,6 @@
 import _ from "lodash";
 import parseFiles from "./parsers.js";
+import stylish from "./formatters/stylish.js";
 
 const getUnionObject = (data1, data2) => {
   const result = {};
@@ -65,6 +66,10 @@ const getGenDiff = (filepath1, filepath2, formatter) => {
 
   const sortedResult = sortedByKeyAndSign(resultObject);
 
-  return formatter(sortedResult);
+  console.log("formatter", formatter, typeof formatter);
+
+  const formatterFn = (formatter && typeof formatter === "function") || stylish;
+  console.log("formatterFn", formatterFn);
+  return formatterFn(sortedResult);
 };
 export default getGenDiff;
