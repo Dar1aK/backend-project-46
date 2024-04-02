@@ -1,6 +1,6 @@
 import _ from "lodash";
 import parseFiles from "./parsers.js";
-import stylish from "./formatters/stylish.js";
+import { json, stylish, plain } from "./formatters/index.js";
 
 const getUnionObject = (data1, data2) => {
   const result = {};
@@ -59,6 +59,19 @@ const sortedByKeyAndSign = (resultObject) => {
   return Object.fromEntries(withSortedChildren);
 };
 
+const formatterFn = (data) => (formatterName) => {
+  switch (formatterName) {
+    case "plain":
+      return plain(data);
+
+    case "json":
+      return json(data);
+
+    default:
+      return stylish(data);
+  }
+};
+
 const getGenDiff = (filepath1, filepath2, formatter) => {
   const { data1, data2 } = parseFiles(filepath1, filepath2);
 
@@ -66,10 +79,6 @@ const getGenDiff = (filepath1, filepath2, formatter) => {
 
   const sortedResult = sortedByKeyAndSign(resultObject);
 
-  console.log("formatter", formatter, typeof formatter);
-
-  const formatterFn = (formatter && typeof formatter === "function") || stylish;
-  console.log("formatterFn", formatterFn);
-  return formatterFn(sortedResult);
+  return formatterFn(sortedResult)(formatter);
 };
 export default getGenDiff;

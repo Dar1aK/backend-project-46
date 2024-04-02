@@ -44,13 +44,13 @@ const getAction = (arr, i, arrKeys, val) => {
 
 const combineLine = (actionObject, string) => {
   if (actionObject.action === ACTIONS.added) {
-    return `Property '${string}' was added with value: ${printValue(actionObject.newValue)}\n`;
+    return `\nProperty '${string}' was added with value: ${printValue(actionObject.newValue)}`;
   }
   if (actionObject.action === ACTIONS.removed) {
-    return `Property '${string}' was removed\n`;
+    return `\nProperty '${string}' was removed`;
   }
   if (actionObject.action === ACTIONS.updated) {
-    return `Property '${string}' was updated. From ${printValue(actionObject.oldValue)} to ${printValue(actionObject.newValue)}\n`;
+    return `\nProperty '${string}' was updated. From ${printValue(actionObject.oldValue)} to ${printValue(actionObject.newValue)}`;
   }
   return "";
 };
@@ -58,7 +58,7 @@ const combineLine = (actionObject, string) => {
 const plain = (tree) => {
   let result = "";
   const iter = (value, string, actionObject) => {
-    result += combineLine(actionObject, string);
+    result = `${result}${combineLine(actionObject, string)}`;
     if (!value || typeof value !== "object") {
       return;
     }
@@ -83,6 +83,6 @@ const plain = (tree) => {
   iter(tree, "", {});
 
   console.log(result);
-  return result;
+  return result.slice(1);
 };
 export default plain;
