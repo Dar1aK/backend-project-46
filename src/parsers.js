@@ -3,10 +3,11 @@ import fs from "fs";
 import yaml from "js-yaml";
 
 const handlePath = (filepath) => {
-  if (!filepath.startsWith(".")) {
-    return `${process.cwd()}${filepath}`;
+  if (filepath.startsWith(".") || filepath.startsWith("/")) {
+    return filepath;
   }
-  return filepath;
+
+  return `${process.cwd()}/__fixtures__/${filepath}`;
 };
 
 const parseFile = (filepath) => {

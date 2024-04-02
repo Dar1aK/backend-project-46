@@ -12,7 +12,6 @@ program
   .name("gendiff")
   .description("Compares two configuration files and shows a difference.")
   .version("1.0.0")
-  .allowUnknownOption()
   .option("-f, --format [type]", "add the specified stylish formatter", stylish)
   .arguments("<filepath1> <filepath2>")
   .action((filepath1, filepath2, options) => {
@@ -23,7 +22,7 @@ program
       formatter = (result) => {
         const jsonResult = json(result);
 
-        fs.writeFile("./__fixtures__/test.json", jsonResult, (err) => {
+        fs.writeFileSync("./__fixtures__/test.json", jsonResult, (err) => {
           if (err) {
             return console.error(err);
           }

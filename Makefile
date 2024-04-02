@@ -8,7 +8,7 @@ lint:
 	npx eslint
 
 test: 
-	npx jest --colors --runInBand --bail
+	npx jest
 
 test-coverage:
 	npx jest --coverage --coverageProvider=v8
