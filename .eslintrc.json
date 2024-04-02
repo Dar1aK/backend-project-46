@@ -13,12 +13,12 @@
     "no-console": 0,
     "quotes": [
       2,
-      "double",
+      "single",
       { "avoidEscape": true, "allowTemplateLiterals": true }
     ],
     "import/extensions": [2, "always"],
     "no-restricted-syntax": [0],
     "import/no-extraneous-dependencies": [0, { "devDependencies": true }],
-    "comma-dangle": [2, "never"]
+    "comma-dangle": [2, "only-multiline"]
   }
 }

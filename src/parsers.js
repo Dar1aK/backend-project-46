@@ -1,9 +1,9 @@
-import path from "path";
-import fs from "fs";
-import yaml from "js-yaml";
+import path from 'path';
+import fs from 'fs';
+import yaml from 'js-yaml';
 
 const handlePath = (filepath) => {
-  if (filepath.startsWith(".") || filepath.startsWith("/")) {
+  if (filepath.startsWith('.') || filepath.startsWith('/')) {
     return filepath;
   }
 
@@ -12,11 +12,11 @@ const handlePath = (filepath) => {
 
 const parseFile = (filepath) => {
   const extension = path.extname(filepath);
-  if (extension === ".yml" || extension === ".yaml") {
-    return yaml.load(fs.readFileSync(filepath, "utf8"));
+  if (extension === '.yml' || extension === '.yaml') {
+    return yaml.load(fs.readFileSync(filepath, 'utf8'));
   }
 
-  return JSON.parse(fs.readFileSync(path.resolve(filepath), "utf-8"));
+  return JSON.parse(fs.readFileSync(path.resolve(filepath), 'utf-8'));
 };
 
 const parseFiles = (filepath1, filepath2) => {

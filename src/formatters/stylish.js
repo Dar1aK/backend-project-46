@@ -1,21 +1,20 @@
-const stylish = (tree, replacer = " ", spacesCount = 4) => {
+const stylish = (tree, replacer = ' ', spacesCount = 4) => {
   const iter = (value, depth) => {
-    if (!value || typeof value !== "object") {
+    if (!value || typeof value !== 'object') {
       return `${value}`;
     }
 
-    const result =
-      "{\n" +
+    const result = `{\n${
       Object.entries(value).reduce((acc, [key, val]) => {
-        const signWidth = key.startsWith("-") || key.startsWith("+") ? 2 : 0;
+        const signWidth = key.startsWith('-') || key.startsWith('+') ? 2 : 0;
 
         return (
-          acc +
-          replacer.repeat(spacesCount * (depth + 1) - signWidth) +
-          `${key}: ${iter(val, depth + 1)}\n`
+          `${acc
+          + replacer.repeat(spacesCount * (depth + 1) - signWidth)
+          }${key}: ${iter(val, depth + 1)}\n`
         );
-      }, "") +
-      `${replacer.repeat(spacesCount * depth)}}`;
+      }, '')
+    }${replacer.repeat(spacesCount * depth)}}`;
 
     return result;
   };

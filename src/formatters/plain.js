@@ -1,17 +1,17 @@
 const ACTIONS = {
-  added: "added",
-  removed: "removed",
-  updated: "updated",
+  added: 'added',
+  removed: 'removed',
+  updated: 'updated',
 };
 
 const printValue = (value) => {
   if (value === null) {
-    return "null";
+    return 'null';
   }
-  if (typeof value === "object") {
-    return "[complex value]";
+  if (typeof value === 'object') {
+    return '[complex value]';
   }
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return `'${value}'`;
   }
   return value;
@@ -19,8 +19,8 @@ const printValue = (value) => {
 
 const getAction = (arr, i, arrKeys, val) => {
   if (
-    arr[i + 1]?.[0].split(" ")[1] &&
-    arr[i + 1][0].split(" ")[1] === arrKeys[1]
+    arr[i + 1]?.[0].split(' ')[1]
+    && arr[i + 1][0].split(' ')[1] === arrKeys[1]
   ) {
     return {
       action: ACTIONS.updated,
@@ -28,13 +28,13 @@ const getAction = (arr, i, arrKeys, val) => {
       oldValue: val,
     };
   }
-  if (arrKeys[0] === "+" && arr[i - 1]?.[0].split(" ")[1] !== arrKeys[1]) {
+  if (arrKeys[0] === '+' && arr[i - 1]?.[0].split(' ')[1] !== arrKeys[1]) {
     return {
       action: ACTIONS.added,
       newValue: val,
     };
   }
-  if (arrKeys[0] === "-") {
+  if (arrKeys[0] === '-') {
     return {
       action: ACTIONS.removed,
     };
@@ -52,26 +52,26 @@ const combineLine = (actionObject, string) => {
   if (actionObject.action === ACTIONS.updated) {
     return `\nProperty '${string}' was updated. From ${printValue(actionObject.oldValue)} to ${printValue(actionObject.newValue)}`;
   }
-  return "";
+  return '';
 };
 
 const plain = (tree) => {
-  let result = "";
+  let result = '';
   const iter = (value, string, actionObject) => {
     result = `${result}${combineLine(actionObject, string)}`;
-    if (!value || typeof value !== "object") {
+    if (!value || typeof value !== 'object') {
       return;
     }
 
     Object.entries(value).forEach(([key, val], i, arr) => {
-      const isStartsWithSign = key.startsWith("+") || key.startsWith("-");
-      const arrKeys = key.split(" ");
+      const isStartsWithSign = key.startsWith('+') || key.startsWith('-');
+      const arrKeys = key.split(' ');
       const newKey = (() => {
         const compareWithSign = arrKeys[1];
         const defaultValue = key;
         return (
-          (string ? "." : "") +
-          (isStartsWithSign ? compareWithSign : defaultValue)
+          (string ? '.' : '')
+          + (isStartsWithSign ? compareWithSign : defaultValue)
         );
       })();
       const action = getAction(arr, i, arrKeys, val);
@@ -80,7 +80,7 @@ const plain = (tree) => {
     });
   };
 
-  iter(tree, "", {});
+  iter(tree, '', {});
 
   console.log(result);
   return result.slice(1);
