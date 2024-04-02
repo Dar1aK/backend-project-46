@@ -23,3 +23,7 @@
 ### Plain formatter
 
 [![asciicast](https://asciinema.org/a/GU2PS4jjTYLROKCPMHSgkAN83.svg)](https://asciinema.org/a/GU2PS4jjTYLROKCPMHSgkAN83)
+
+### Json formatter
+
+[![asciicast](https://asciinema.org/a/C1Q94QIfNbkkCrHI27LyYpT5s.svg)](https://asciinema.org/a/C1Q94QIfNbkkCrHI27LyYpT5s)

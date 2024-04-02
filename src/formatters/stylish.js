@@ -22,7 +22,7 @@ const stylish = (tree, replacer = " ", spacesCount = 4) => {
 
   const iterResult = iter(tree, 0);
 
-  iterResult.split("\n").forEach((element) => console.log(element));
+  console.log(iterResult);
 
   return iterResult;
 };
