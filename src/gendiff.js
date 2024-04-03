@@ -3,34 +3,36 @@ import parseFiles from './parsers.js';
 import { json, stylish, plain } from './formatters/index.js';
 
 const getUnionObject = (data1, data2) => {
-  const result = {};
   const keys1 = Object.keys(data1);
   const keys2 = (data2 && typeof data2 !== 'object') || Array.isArray(data2)
     ? data2
     : Object.keys(data2);
   const keys = _.union(keys1, keys2);
 
-  for (const key of keys) {
+  const result = keys.reduce((acc, key) => {
     if (typeof data1[key] === 'object' && !Array.isArray(data1[key])) {
       if (data2[key] === undefined) {
-        result[`- ${key}`] = data1[key];
-      } else if (typeof data2[key] !== 'object') {
-        result[`- ${key}`] = data1[key];
-        result[`+ ${key}`] = data2[key];
-      } else {
-        result[key] = getUnionObject(data1[key], data2[key] || {});
+        return { ...acc, [`- ${key}`]: data1[key] };
       }
-    } else if (!Object.hasOwn(data1, key)) {
-      result[`+ ${key}`] = data2[key];
-    } else if (!Object.hasOwn(data2, key)) {
-      result[`- ${key}`] = data1[key];
-    } else if (data1[key] !== data2[key]) {
-      result[`- ${key}`] = data1[key];
-      result[`+ ${key}`] = data2[key];
-    } else {
-      result[key] = data1[key];
+
+      if (typeof data2[key] !== 'object') {
+        return { ...acc, [`- ${key}`]: data1[key], [`+ ${key}`]: data2[key] };
+      }
+      return { ...acc, [key]: getUnionObject(data1[key], data2[key] || {}) };
     }
-  }
+    if (!Object.hasOwn(data1, key)) {
+      return { ...acc, [`+ ${key}`]: data2[key] };
+    }
+
+    if (!Object.hasOwn(data2, key)) {
+      return { ...acc, [`- ${key}`]: data1[key] };
+    }
+    if (data1[key] !== data2[key]) {
+      return { ...acc, [`- ${key}`]: data1[key], [`+ ${key}`]: data2[key] };
+    }
+    return { ...acc, [key]: data1[key] };
+  }, {});
+
   return result;
 };
 

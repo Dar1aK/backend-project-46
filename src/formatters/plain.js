@@ -4,6 +4,10 @@ const ACTIONS = {
   updated: 'updated',
 };
 
+const isObject = (value) => typeof value === 'object'
+&& !Array.isArray(value)
+&& value !== null;
+
 const printValue = (value) => {
   if (value === null) {
     return 'null';
@@ -32,11 +36,13 @@ const getAction = (arr, i, arrKeys, val) => {
     return {
       action: ACTIONS.added,
       newValue: val,
+      isEnd: isObject(val),
     };
   }
   if (arrKeys[0] === '-') {
     return {
       action: ACTIONS.removed,
+      isEnd: isObject(val),
     };
   }
   return {};
@@ -55,34 +61,44 @@ const combineLine = (actionObject, string) => {
   return '';
 };
 
+const plainIteration = ({
+  value, iter, string, result,
+}) => Object.entries(value).reduce((acc, [key, val], i, arr) => {
+  const isStartsWithSign = key.startsWith('+') || key.startsWith('-');
+  const arrKeys = key.split(' ');
+  const newKey = (() => {
+    const compareWithSign = arrKeys[1];
+    const defaultValue = key;
+    return (
+      (string ? '.' : '')
+      + (isStartsWithSign ? compareWithSign : defaultValue)
+    );
+  })();
+  const action = getAction(arr, i, arrKeys, val);
+
+  if (action.isEnd) {
+    return acc + iter(null, `${string}${newKey}`, action, result);
+  }
+
+  return acc + iter(val, `${string}${newKey}`, action, result);
+}, '');
+
 const plain = (tree) => {
-  let result = '';
-  const iter = (value, string, actionObject) => {
-    result = `${result}${combineLine(actionObject, string)}`;
+  const iter = (value, string, actionObject, tempResult = '') => {
+    const result = `${tempResult}${combineLine(actionObject, string)}`;
     if (!value || typeof value !== 'object') {
-      return;
+      return result;
     }
 
-    Object.entries(value).forEach(([key, val], i, arr) => {
-      const isStartsWithSign = key.startsWith('+') || key.startsWith('-');
-      const arrKeys = key.split(' ');
-      const newKey = (() => {
-        const compareWithSign = arrKeys[1];
-        const defaultValue = key;
-        return (
-          (string ? '.' : '')
-          + (isStartsWithSign ? compareWithSign : defaultValue)
-        );
-      })();
-      const action = getAction(arr, i, arrKeys, val);
-
-      return iter(val, `${string}${newKey}`, action);
+    const objectsResult = plainIteration({
+      value, iter, string, result,
     });
+    return objectsResult;
   };
 
-  iter(tree, '', {});
+  const res = iter(tree, '', {});
 
-  console.log(result);
-  return result.slice(1);
+  console.log(res);
+  return res.slice(1);
 };
 export default plain;
