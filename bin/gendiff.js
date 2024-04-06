@@ -12,6 +12,10 @@ program
   .version('1.0.0')
   .option('-f, --format [type]', 'add the specified stylish formatter')
   .arguments('<filepath1> <filepath2>')
-  .action((filepath1, filepath2, options) => getGenDiff(filepath1, filepath2, options.format));
+  .action((filepath1, filepath2, options) => {
+    const result = getGenDiff(filepath1, filepath2, options.format);
+    console.log(result);
+    return result;
+  });
 
 program.parse(process.argv);

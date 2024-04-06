@@ -1,7 +1,3 @@
-const formatInJson = (data) => {
-  const jsonResult = JSON.stringify(data);
-  console.log(jsonResult);
-  return jsonResult;
-};
+const formatInJson = (data) => JSON.stringify(data);
 
 export default formatInJson;

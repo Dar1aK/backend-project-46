@@ -98,7 +98,6 @@ const plain = (tree) => {
 
   const res = iter(tree, '', {});
 
-  console.log(res);
   return res.slice(1);
 };
 export default plain;

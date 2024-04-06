@@ -8,7 +8,43 @@
 
 [![build](https://github.com/Dar1aK/backend-project-46/actions/workflows/build.yml/badge.svg)](https://github.com/Dar1aK/backend-project-46/actions/workflows/build.yml)
 
-### gendiff
+### Getting Started
+
+For using this game repository you need to have npm and Makefile installed on your computer.
+
+#### Installation
+
+For packages installation use
+
+```
+make install
+```
+
+To run tests
+
+```
+make test
+```
+
+To run the program with default `stylish` formatter you need to enter
+
+```
+gendiff file1.yml file2.yml
+```
+
+To run the program with `plain` formatter setting then enter
+
+```
+gendiff file1.yml file2.yml -f plain
+```
+
+To run the program with `json` formatter setting then enter
+
+```
+gendiff file1.yml file2.yml -f json
+```
+
+### Gendiff
 
 [![asciicast](https://asciinema.org/a/FVew4qwyJMUF9a00rxnGLTxML.svg)](https://asciinema.org/a/FVew4qwyJMUF9a00rxnGLTxML)
 
@@ -18,7 +54,7 @@
 
 ### Nested objects
 
-[![asciicast](https://asciinema.org/a/RrVeZVm5vFGAcR60uI4bFmfNK.svg)](https://asciinema.org/a/RrVeZVm5vFGAcR60uI4bFmfNK)
+[![asciicast](https://asciinema.org/a/KqYSIFkKDdU8YjySIFOmTEiDY.svg)](https://asciinema.org/a/KqYSIFkKDdU8YjySIFOmTEiDY)
 
 ### Plain formatter
 

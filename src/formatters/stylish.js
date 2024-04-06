@@ -21,8 +21,6 @@ const stylish = (tree, replacer = ' ', spacesCount = 4) => {
 
   const iterResult = iter(tree, 0);
 
-  console.log(iterResult);
-
   return iterResult;
 };
 
