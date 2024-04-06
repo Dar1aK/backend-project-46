@@ -1,12 +1,4 @@
-const ACTIONS = {
-  added: 'added',
-  removed: 'removed',
-  updated: 'updated',
-};
-
-const isObject = (value) => typeof value === 'object'
-&& !Array.isArray(value)
-&& value !== null;
+import { ACTIONS, isJsonString } from '../utils.js';
 
 const printValue = (value) => {
   if (value === null) {
@@ -19,33 +11,6 @@ const printValue = (value) => {
     return `'${value}'`;
   }
   return value;
-};
-
-const getAction = (arr, i, arrKeys, val) => {
-  if (
-    arr[i + 1]?.[0].split(' ')[1]
-    && arr[i + 1][0].split(' ')[1] === arrKeys[1]
-  ) {
-    return {
-      action: ACTIONS.updated,
-      newValue: arr[i + 1]?.[1],
-      oldValue: val,
-    };
-  }
-  if (arrKeys[0] === '+' && arr[i - 1]?.[0].split(' ')[1] !== arrKeys[1]) {
-    return {
-      action: ACTIONS.added,
-      newValue: val,
-      isEnd: isObject(val),
-    };
-  }
-  if (arrKeys[0] === '-') {
-    return {
-      action: ACTIONS.removed,
-      isEnd: isObject(val),
-    };
-  }
-  return {};
 };
 
 const combineLine = (actionObject, string) => {
@@ -63,22 +28,20 @@ const combineLine = (actionObject, string) => {
 
 const plainIteration = ({
   value, iter, string, result,
-}) => Object.entries(value).reduce((acc, [key, val], i, arr) => {
-  const isStartsWithSign = key.startsWith('+') || key.startsWith('-');
-  const arrKeys = key.split(' ');
+}) => Object.entries(value).reduce((acc, [key, val]) => {
+  const objectKeys = isJsonString(key) ? JSON.parse(key) : key;
   const newKey = (() => {
-    const compareWithSign = arrKeys[1];
-    const defaultValue = key;
+    const defaultValue = objectKeys.title || objectKeys;
     return (
       (string ? '.' : '')
-      + (isStartsWithSign ? compareWithSign : defaultValue)
+      + defaultValue
     );
   })();
-  const action = getAction(arr, i, arrKeys, val);
-
-  if (action.isEnd) {
-    return acc + iter(null, `${string}${newKey}`, action, result);
-  }
+  const action = {
+    action: objectKeys.type,
+    newValue: objectKeys.newValue,
+    oldValue: objectKeys.oldValue,
+  };
 
   return acc + iter(val, `${string}${newKey}`, action, result);
 }, '');
@@ -89,7 +52,6 @@ const plain = (tree) => {
     if (!value || typeof value !== 'object') {
       return result;
     }
-
     const objectsResult = plainIteration({
       value, iter, string, result,
     });
@@ -97,7 +59,6 @@ const plain = (tree) => {
   };
 
   const res = iter(tree, '', {});
-
   return res.slice(1);
 };
 export default plain;
