@@ -1,16 +1,21 @@
-import { default as stylish } from './stylish.js';
-import { default as plain } from './plain.js';
-import { default as json } from './json.js';
+import stylish from './stylish.js';
+import plain from './plain.js';
+import json from './json.js';
 
 const formatterFn = (data) => (formatterName) => {
-    switch (formatterName) {
-      case 'plain':
-        return plain(data);
-      case 'json':
-        return json(data);
-      default:
-        return stylish(data);
-    }
-  };
+  switch (formatterName) {
+    case 'plain':
+      return plain(data);
+    case 'json':
+      return json(data);
+    case 'stylish':
+    case undefined:
+      return stylish(data);
+    default:
+      return new Error(`No formatter for this formatter name: '${formatterName}'`);
+  }
+};
 
-export {stylish, plain, json, formatterFn}
+export {
+  stylish, plain, json, formatterFn,
+};

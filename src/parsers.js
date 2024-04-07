@@ -8,7 +8,7 @@ const parseFile = (fileString, format) => {
     case 'json':
       return JSON.parse(fileString);
     default:
-      return new Error('No format loader for this file')
+      return new Error('No format loader for this file');
   }
 };
 
