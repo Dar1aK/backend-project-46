@@ -1,32 +1,15 @@
-import path from 'path';
-import fs from 'fs';
 import yaml from 'js-yaml';
 
-const handlePath = (filepath) => {
-  if (filepath.startsWith('.') || filepath.startsWith('/')) {
-    return filepath;
+const parseFile = (fileString, format) => {
+  switch (format) {
+    case 'yml':
+    case 'yaml':
+      return yaml.load(fileString);
+    case 'json':
+      return JSON.parse(fileString);
+    default:
+      return new Error('No format loader for this file')
   }
-
-  return `${process.cwd()}/__fixtures__/${filepath}`;
 };
 
-const parseFile = (filepath) => {
-  const extension = path.extname(filepath);
-  if (extension === '.yml' || extension === '.yaml') {
-    return yaml.load(fs.readFileSync(filepath, 'utf8'));
-  }
-
-  return JSON.parse(fs.readFileSync(path.resolve(filepath), 'utf-8'));
-};
-
-const parseFiles = (filepath1, filepath2) => {
-  const path1 = handlePath(filepath1);
-  const path2 = handlePath(filepath2);
-
-  const data1 = parseFile(path1);
-  const data2 = parseFile(path2);
-
-  return { data1, data2 };
-};
-
-export default parseFiles;
+export default parseFile;

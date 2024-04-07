@@ -37,6 +37,7 @@ const plainIteration = ({
       + defaultValue
     );
   })();
+
   const action = {
     action: objectKeys.type,
     newValue: objectKeys.newValue,
@@ -49,9 +50,15 @@ const plainIteration = ({
 const plain = (tree) => {
   const iter = (value, string, actionObject, tempResult = '') => {
     const result = `${tempResult}${combineLine(actionObject, string)}`;
-    if (!value || typeof value !== 'object') {
+
+    if (Object.hasOwn(actionObject, 'action') && !actionObject.action) {
+      return '';
+    }
+
+    if (actionObject.action && actionObject.action !== ACTIONS.nested) {
       return result;
     }
+
     const objectsResult = plainIteration({
       value, iter, string, result,
     });
