@@ -1,29 +1,41 @@
-import { getSign, isJsonString } from '../utils.js';
+import { ACTIONS, getSign } from '../utils.js';
 
 const createResultStrings = (iter) => (acc, [key, val], replacer, spacesCount, depth) => {
-  const objectKeys = isJsonString(key) ? JSON.parse(key) : key;
-  const signWidth = objectKeys.type === 'added' || objectKeys.type === 'removed' || objectKeys.type === 'updated' ? 2 : 0;
-  const propertyName = objectKeys.title || objectKeys;
+  const signWidth = val.type === ACTIONS.added
+    || val.type === ACTIONS.removed
+    || val.type === ACTIONS.updated
+    ? 2
+    : 0;
 
-  if (objectKeys.type === 'updated') {
+  if (val.type === ACTIONS.updated) {
     return (
       `${acc
       + replacer.repeat(spacesCount * (depth + 1) - signWidth)
-      }- ${propertyName}: ${iter(objectKeys.oldValue, depth + 1)}\n${replacer.repeat(spacesCount * (depth + 1) - signWidth)
-      }+ ${propertyName}: ${iter(objectKeys.newValue, depth + 1)}\n`
+      }- ${key}: ${iter(val.oldValue, depth + 1)}\n${replacer.repeat(spacesCount * (depth + 1) - signWidth)
+      }+ ${key}: ${iter(val.newValue, depth + 1)}\n`
     );
   }
+
+  const sign = getSign(val);
+  const getValue = (() => {
+    if (sign === '-') {
+      return val.oldValue;
+    }
+    if (sign === '+' || val.newValue) {
+      return val.newValue;
+    }
+    return val;
+  })();
 
   return (
     `${acc
     + replacer.repeat(spacesCount * (depth + 1) - signWidth)
-    }${getSign(objectKeys)}${propertyName}: ${iter(val, depth + 1)}\n`
+    }${sign ? `${sign} ` : ''}${key}: ${iter(getValue, depth + 1)}\n`
   );
 };
 
 const stylish = (tree, replacer = ' ', spacesCount = 4) => {
-  const iter = (valueUnparsed, depth) => {
-    const value = isJsonString(valueUnparsed) ? JSON.parse(valueUnparsed) : valueUnparsed;
+  const iter = (value, depth) => {
     if (!value || typeof value !== 'object') {
       return value;
     }

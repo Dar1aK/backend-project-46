@@ -1,4 +1,4 @@
-import { ACTIONS, isJsonString } from '../utils.js';
+import { ACTIONS } from '../utils.js';
 
 const printValue = (value) => {
   if (value === null) {
@@ -29,22 +29,15 @@ const combineLine = (actionObject, string) => {
 const plainIteration = ({
   value, iter, string, result,
 }) => Object.entries(value).reduce((acc, [key, val]) => {
-  const objectKeys = isJsonString(key) ? JSON.parse(key) : key;
-  const newKey = (() => {
-    const defaultValue = objectKeys.title || objectKeys;
-    return (
-      (string ? '.' : '')
-      + defaultValue
-    );
-  })();
+  const newKey = (string ? '.' : '') + key;
 
   const action = {
-    action: objectKeys.type,
-    newValue: objectKeys.newValue,
-    oldValue: objectKeys.oldValue,
+    action: val.type,
+    newValue: val.newValue,
+    oldValue: val.oldValue,
   };
 
-  return acc + iter(val, `${string}${newKey}`, action, result);
+  return acc + iter(val.newValue, `${string}${newKey}`, action, result);
 }, '');
 
 const plain = (tree) => {
