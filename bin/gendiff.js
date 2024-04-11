@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 
-import getGenDiff from '../src/gendiff.js';
+import format from '../src/gendiff.js';
 
 const program = new Command();
 
@@ -13,7 +13,7 @@ program
   .option('-f, --format [type]', 'add the specified stylish formatter')
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2, options) => {
-    const result = getGenDiff(filepath1, filepath2, options.format);
+    const result = format(filepath1, filepath2, options.format);
     console.log(result);
     return result;
   });

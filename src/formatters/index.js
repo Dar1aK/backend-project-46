@@ -2,8 +2,8 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
-const formatterFn = (data) => (formatterName) => {
-  switch (formatterName) {
+const makeFormatter = (formatName, data) => {
+  switch (formatName) {
     case 'plain':
       return plain(data);
     case 'json':
@@ -12,10 +12,10 @@ const formatterFn = (data) => (formatterName) => {
     case undefined:
       return stylish(data);
     default:
-      return new Error(`No formatter for this formatter name: '${formatterName}'`);
+      return new Error(`No formatter for this format name: '${formatName}'`);
   }
 };
 
 export {
-  stylish, plain, json, formatterFn,
+  stylish, plain, json, makeFormatter,
 };

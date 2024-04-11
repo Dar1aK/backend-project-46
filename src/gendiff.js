@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import parseFile from './parsers.js';
-import { generateAST, sortedByKey } from './generateAST.js';
-import { formatterFn } from './formatters/index.js';
+import generateAST from './generateAST.js';
+import { makeFormatter } from './formatters/index.js';
 
 const handlePath = (filepath) => {
   if (filepath.startsWith('.') || filepath.startsWith('/')) {
@@ -12,27 +12,22 @@ const handlePath = (filepath) => {
   return `${process.cwd()}/__fixtures__/${filepath}`;
 };
 
-const parseFiles = (filepath1, filepath2) => {
-  const path1 = handlePath(filepath1);
-  const path2 = handlePath(filepath2);
+const parseFileByPath = (filepath) => {
+  const filePath = handlePath(filepath);
 
-  const data1 = parseFile(
-    fs.readFileSync(path1, 'utf8'),
-    path.extname(path1).slice(1),
-  );
-  const data2 = parseFile(
-    fs.readFileSync(path2, 'utf8'),
-    path.extname(path2).slice(1),
+  const data = parseFile(
+    fs.readFileSync(filePath, 'utf8'),
+    path.extname(filePath).slice(1),
   );
 
-  return { data1, data2 };
+  return data;
 };
 
-const getGenDiff = (filepath1, filepath2, formatter) => {
-  const { data1, data2 } = parseFiles(filepath1, filepath2);
+const format = (filepath1, filepath2, formatName) => {
+  const data1 = parseFileByPath(filepath1);
+  const data2 = parseFileByPath(filepath2);
   const resultObject = generateAST(data1, data2);
-  const sortedResult = sortedByKey(resultObject);
 
-  return formatterFn(sortedResult)(formatter);
+  return makeFormatter(formatName, resultObject);
 };
-export default getGenDiff;
+export default format;
